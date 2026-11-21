@@ -1,0 +1,646 @@
+<title>યશ અને ભાવિકા</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500&family=Hind+Vadodara:wght@400;500;600&family=Kumar+One&display=swap">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  /* Layout concept: a vertical scroll of ogee-arch (mehrab) panels like the printed cards.
+     The gold arch draws itself, lilies drift at different depths, petals fall softly,
+     the events sit on a timeline that fills as you scroll, and peacock feathers sway beside it. */
+  --ivory:#fbf6f2;
+  --blush:#f3e0e4;
+  --lilac:#e8dbea;
+  --wine:#7d1535;
+  --wine-deep:#4f0d22;
+  --saffron:#b4601a;
+  --brown:#8a4712;
+  --gold:#d1a03e;
+  --gold-lt:#f0d085;
+  --teal:#0f6b74;
+  --ink:#3b1721;
+  --ink-soft:#6d4b54;
+  --paper:rgba(255,255,255,.74);
+  --f-display:'Kumar One','Baloo Bhai 2',serif;
+  --f-head:'Baloo Bhai 2','Hind Vadodara',sans-serif;
+  --f-body:'Hind Vadodara','Noto Sans Gujarati',sans-serif;
+  --f-latin:'Cormorant Garamond',Georgia,serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ivory);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.75;overflow-x:hidden}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance;font-weight:inherit}
+.wrap{width:100%;max-width:1040px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section,header,footer{overflow-x:clip}
+
+/* fixed atmosphere */
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(55% 38% at 12% 8%,var(--blush),transparent 70%),
+    radial-gradient(48% 38% at 92% 28%,var(--lilac),transparent 70%),
+    radial-gradient(60% 40% at 18% 78%,#f7e7de,transparent 70%),
+    radial-gradient(50% 40% at 90% 90%,var(--blush),transparent 70%),
+    var(--ivory)}
+.progress{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:3px;z-index:30;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--wine),var(--gold))}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:6}
+
+/* reveal on scroll */
+.rv{transition:opacity .95s cubic-bezier(.2,.7,.2,1),transform .95s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv{opacity:0;transform:translateY(28px)}
+.js .rv.rv-l{transform:translateX(-42px)}
+.js .rv.rv-r{transform:translateX(42px)}
+.js .rv.rv-z{transform:scale(.92)}
+.js .rv.in{opacity:1;transform:none}
+
+/* parallax decor */
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.px{position:absolute;transform:translate3d(0,var(--py,0px),0) rotate(var(--rot,0deg));will-change:transform}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 7s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.lily{opacity:.92}
+.d-a{left:-70px;top:30px;width:250px}
+.d-b{right:-80px;top:120px;width:280px}
+.d-c{left:-90px;bottom:60px;width:260px}
+.d-d{right:-70px;bottom:20px;width:230px}
+.d-e{left:-30px;top:330px;width:120px}
+.d-f{right:-26px;bottom:330px;width:130px}
+
+/* ogee arch panel */
+.arch{position:relative;container-type:inline-size;width:100%;margin-inline:auto;filter:drop-shadow(0 24px 40px rgba(125,21,53,.10))}
+.arch.a-hero{max-width:640px}
+.arch.a-letter{max-width:800px}
+.cap{position:absolute;left:0;top:0;width:100%;aspect-ratio:100/42;height:auto;overflow:visible;pointer-events:none}
+.cap .fill{fill:var(--paper);stroke:none}
+.cap .l{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 2.6s cubic-bezier(.5,0,.2,1)}
+.cap .l1{stroke:var(--gold);stroke-width:.3}
+.cap .l2{stroke:var(--gold-lt);stroke-width:.18;transition-delay:.35s}
+.js .arch:not(.in) .cap .l{stroke-dashoffset:1}
+.arch-main{position:relative;padding:15cqw 8cqw 44px;text-align:center}
+.arch-main::before{content:"";position:absolute;left:0;right:0;top:41cqw;bottom:0;background:var(--paper);border:2px solid var(--gold);border-top:0;border-radius:0 0 28px 28px}
+.arch-main::after{content:"";position:absolute;left:2.7cqw;right:2.7cqw;top:41cqw;bottom:10px;border-inline:1px solid rgba(209,160,62,.55);pointer-events:none}
+.arch-main>*{position:relative;z-index:1}
+
+/* hero */
+.hero{position:relative;padding-block:30px 60px;text-align:center}
+.hero .wrap{position:relative;z-index:1}
+.brand{display:flex;justify-content:center;gap:.7em;margin-bottom:22px;font:700 clamp(1.7rem,6.6vw,2.6rem)/1.3 var(--f-head);color:var(--wine);letter-spacing:.06em}
+.emblem{display:block;width:86px;height:auto;margin:0 auto 4px;animation:float 5.5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+.shri{font:600 .95rem/1.5 var(--f-head);color:var(--wine);letter-spacing:.08em}
+.title{margin:6px 0 4px;font:400 clamp(2.6rem,13cqw,5rem)/1.5 var(--f-display);color:var(--saffron);padding-block:.05em}
+@supports (-webkit-background-clip:text) or (background-clip:text){
+  .title{background:linear-gradient(100deg,#8f5f10 0%,#e6bd55 28%,#fff0b3 44%,#c8942a 60%,#8a5a0e 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 7s ease-in-out infinite}
+}
+@keyframes shimmer{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.pair{display:grid;margin-top:8px}
+.nm{font:700 clamp(2rem,9.5cqw,3.2rem)/1.4 var(--f-head);color:var(--saffron)}
+.nm.l{justify-self:start;padding-left:2cqw}
+.nm.r{justify-self:end;padding-right:2cqw}
+.mid{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--wine);font:600 .98rem/1.4 var(--f-head)}
+.mid svg{width:20px;height:auto;flex:none}
+.latin{margin-top:8px;font:italic 500 clamp(1.3rem,5.4cqw,1.9rem)/1.2 var(--f-latin);color:var(--ink-soft);letter-spacing:.03em}
+.date{margin-top:18px;font:600 1.2rem/1.5 var(--f-head);color:var(--wine)}
+.date-sub{font:500 .95rem/1.5 var(--f-head);color:var(--ink-soft)}
+.cue{margin-top:24px;display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;cursor:pointer;color:var(--ink-soft);font:500 .85rem var(--f-head);padding:6px 12px;border-radius:12px}
+.cue svg{width:18px;height:18px;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+
+/* ornaments */
+.orn{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.orn i{flex:1;height:1px;background:var(--saffron);opacity:.8}
+.orn b{width:8px;height:8px;transform:rotate(45deg);background:var(--saffron)}
+.orn b.r{background:#c0182f}
+
+/* letter */
+.letter{position:relative;padding-block:10px 80px}
+.letter .wrap{position:relative;z-index:1}
+.sri{font:600 .95rem/1.5 var(--f-head);color:var(--wine);letter-spacing:.05em}
+.sides{display:flex;justify-content:space-between;gap:10px;margin-top:2px;font:600 .88rem/1.5 var(--f-head);color:var(--wine)}
+.guest{display:flex;align-items:baseline;gap:10px;margin:26px 0 18px;text-align:left;font:600 1.15rem/1.6 var(--f-head);color:var(--wine)}
+.guest label{flex:none}
+.guest input,.field input{flex:1;min-width:0;width:100%;background:transparent;border:0;border-bottom:2px solid var(--saffron);border-radius:0;font:600 1.1rem/1.6 var(--f-head);color:var(--ink);padding:2px 4px}
+.guest input::placeholder,.field input::placeholder{color:var(--ink-soft);opacity:.65;font-weight:500}
+.guest input:focus-visible,.field input:focus-visible{outline:none;border-bottom-color:var(--wine);box-shadow:0 2px 0 var(--wine)}
+.lt{font:600 clamp(1rem,3.7cqw,1.26rem)/1.9 var(--f-head);color:var(--brown)}
+.lt+.lt{margin-top:14px}
+.couple{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin:26px 0}
+.person{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chip{position:relative;display:inline-block;padding:4px 34px 6px;background:linear-gradient(120deg,var(--wine),#a62a4d);color:#fff;border-radius:44px 14px 44px 14px;font:700 clamp(1.7rem,6.6cqw,2.3rem)/1.4 var(--f-head);box-shadow:0 8px 18px rgba(125,21,53,.22)}
+.person.b .chip{border-radius:14px 44px 14px 44px}
+.heart{position:absolute;width:26px;height:auto}
+.person .edu{font:500 .95rem/1.3 var(--f-latin);font-style:italic;color:var(--ink-soft);letter-spacing:.03em}
+.union{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--wine);font:700 .92rem/1.3 var(--f-head)}
+.union svg{width:64px;height:auto}
+.invite{font:700 clamp(1.05rem,3.9cqw,1.3rem)/1.9 var(--f-head);color:var(--wine)}
+
+/* countdown */
+.count{position:relative;background:radial-gradient(60% 120% at 15% 0%,rgba(209,160,62,.22),transparent 60%),radial-gradient(50% 100% at 95% 100%,rgba(166,42,77,.45),transparent 60%),var(--wine-deep);color:#fff;padding-block:64px;text-align:center}
+.count .eyebrow{color:var(--gold-lt)}
+.count h2{font:400 clamp(1.8rem,6vw,2.8rem)/1.5 var(--f-display);color:#fff;margin:4px 0 26px}
+.units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:600px;margin-inline:auto}
+.unit{border:1px solid rgba(240,208,133,.45);border-radius:18px;padding:14px 4px 10px;background:rgba(255,255,255,.06)}
+.unit .n{display:block;font:700 clamp(2rem,9vw,3.4rem)/1.25 var(--f-head);color:var(--gold-lt)}
+.unit .t{font:500 .9rem/1.3 var(--f-head);color:#f4dce2;letter-spacing:.04em}
+.count .note{margin-top:22px;font:500 .98rem/1.6 var(--f-head);color:#f4dce2}
+
+/* events */
+.events{position:relative;padding-block:90px 80px}
+.events .wrap{position:relative;z-index:1}
+.eyebrow{font:600 .95rem/1.5 var(--f-head);color:var(--wine);letter-spacing:.1em}
+.sec-head{text-align:center;margin-bottom:46px}
+.h2{margin-top:4px;font:400 clamp(2rem,7.4vw,3.5rem)/1.55 var(--f-display);color:var(--saffron)}
+.tl{position:relative;list-style:none;margin:0;padding:6px 0}
+.tl::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:rgba(209,160,62,.35)}
+.tl-fill{position:absolute;top:0;bottom:0;left:50%;width:3px;margin-left:-1.5px;border-radius:3px;background:linear-gradient(var(--gold),var(--wine));transform-origin:50% 0;transform:scaleY(0)}
+.day{position:relative;display:flex;justify-content:center;margin:34px 0 14px;z-index:2}
+.day:first-child{margin-top:0}
+.pill{display:inline-block;padding:3px 22px;border-radius:999px;background:var(--wine);color:#fff;font:600 .98rem/1.7 var(--f-head);letter-spacing:.03em;box-shadow:0 6px 16px rgba(125,21,53,.22)}
+.ev{position:relative;width:calc(50% - 38px);margin-block:18px}
+.ev.r{margin-left:auto}
+.dot{position:absolute;top:34px;width:18px;height:18px;border-radius:50%;background:var(--ivory);border:3px solid var(--gold);transition:background .5s,border-color .5s,transform .5s;z-index:3}
+.ev.l .dot{right:-47px}
+.ev.r .dot{left:-47px}
+.dot.on{background:var(--wine);border-color:var(--wine);transform:scale(1.2)}
+.card{padding:18px 22px 20px;text-align:center;background:var(--paper);border:1.5px solid rgba(209,160,62,.75);border-radius:22px;box-shadow:0 12px 28px rgba(125,21,53,.08);transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(125,21,53,.14)}
+.card h3{font:700 1.5rem/1.5 var(--f-head);color:var(--saffron)}
+.card .tith{font:500 1rem/1.6 var(--f-head);color:var(--brown)}
+.card .time{font:700 1.2rem/1.6 var(--f-head);color:var(--wine)}
+.card .where{margin-top:4px;font:500 .95rem/1.55 var(--f-head);color:var(--ink-soft)}
+.ev.key .card{border-color:var(--wine);background:rgba(255,255,255,.88)}
+.ev.key h3{color:var(--wine)}
+.f-l{left:-14px;top:70px;width:70px}
+.f-r{right:-14px;bottom:90px;width:70px}
+
+/* venue */
+.venue{position:relative;padding-block:30px 90px}
+.ribbon{display:inline-block;padding:4px 40px;background:var(--wine);color:#fff;font:700 1.15rem/1.6 var(--f-head);letter-spacing:.04em;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%)}
+.ribbon.o{background:var(--saffron)}
+.venues{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:26px;margin-top:8px}
+.vcard{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 22px 28px;text-align:center;background:var(--paper);border:1.5px solid rgba(209,160,62,.75);border-radius:26px;box-shadow:0 14px 30px rgba(125,21,53,.08)}
+.vcard address{font:600 1.08rem/1.8 var(--f-head);font-style:normal;color:var(--brown)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 24px;border-radius:999px;border:1.5px solid var(--wine);background:var(--wine);color:#fff;text-decoration:none;font:600 1rem/1 var(--f-head);cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(125,21,53,.25)}
+.btn:focus-visible,.cue:focus-visible,.step:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--wine)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* rsvp */
+.rsvp{position:relative;padding-block:0 90px}
+.rsvp-card{max-width:620px;margin-inline:auto;padding:34px 26px 32px;text-align:center;background:var(--paper);border:1.5px solid rgba(209,160,62,.75);border-radius:30px 30px 30px 30px;box-shadow:0 18px 40px rgba(125,21,53,.10)}
+.rsvp-card h2{font:700 clamp(1.6rem,5.6vw,2.1rem)/1.5 var(--f-head);color:var(--wine)}
+.rsvp-card .sub{margin:6px 0 22px;font:500 1rem/1.7 var(--f-head);color:var(--ink-soft)}
+.field{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;text-align:left}
+.field>label,.field>.lab{flex:none;min-width:5.6em;font:600 1.05rem/1.6 var(--f-head);color:var(--wine)}
+.stepper{display:inline-flex;align-items:center;gap:14px}
+.step{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--wine);background:transparent;color:var(--wine);font:700 1.3rem/1 var(--f-head);cursor:pointer}
+.step:hover{background:var(--wine);color:#fff}
+.stepper output{min-width:2ch;text-align:center;font:700 1.4rem/1 var(--f-head);color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+.fine{margin-top:16px;font:500 .88rem/1.6 var(--f-head);color:var(--ink-soft)}
+
+/* footer */
+.foot{position:relative;background:var(--wine-deep);color:#f4dce2;padding-block:60px 44px;text-align:center}
+.foot .ribbon{margin-bottom:18px}
+.foot h2{font:700 1.3rem/1.6 var(--f-head);color:var(--gold-lt);letter-spacing:.06em}
+.hosts{margin:8px 0 14px;font:600 clamp(1.05rem,4vw,1.3rem)/1.9 var(--f-head);color:#fff}
+.foot address{font:500 1.05rem/1.8 var(--f-head);font-style:normal}
+.foot .tel{margin-top:6px;font:600 1.1rem/1.8 var(--f-head);color:var(--gold-lt)}
+.foot .tel a{color:inherit;text-decoration:none;white-space:nowrap}
+.foot .tel a:hover{text-decoration:underline}
+.sig{margin-top:30px;font:700 1.5rem/1.5 var(--f-head);color:var(--gold-lt)}
+.sig small{display:block;font:italic 500 1.35rem/1.3 var(--f-latin);color:#f4dce2;letter-spacing:.04em}
+.foot .btn.ghost{color:var(--gold-lt);border-color:var(--gold-lt)}
+.foot .btn.ghost:hover{background:rgba(240,208,133,.12);box-shadow:none}
+#linkbox{margin-top:12px;width:100%;max-width:420px;padding:8px 12px;border-radius:10px;border:1px solid var(--gold-lt);background:rgba(255,255,255,.08);color:#fff;font:500 .9rem var(--f-head)}
+
+@media (max-width:760px){
+  .tl::before,.tl-fill{left:18px}
+  .ev,.ev.r{width:100%;margin-left:0;padding-left:46px}
+  .ev.l .dot,.ev.r .dot{left:9px;right:auto}
+  .day{justify-content:flex-start;padding-left:0}
+  .day .pill{margin-left:0}
+  .couple{grid-template-columns:1fr;justify-items:center;gap:10px}
+  .d-a,.d-b,.d-c,.d-d{width:190px}
+  .field{flex-direction:column;align-items:stretch;gap:2px}
+  .field>.lab{min-width:0}
+  .stepper{align-self:flex-start;margin-top:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .js .arch:not(.in) .cap .l{stroke-dashoffset:0}
+  .cap .l,.sway,.emblem,.title,.cue svg{animation:none;transition:none}
+  .px{transform:none;will-change:auto}
+  #petals{display:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="petal" x1="0" y1="0" x2="0" y2="-1"><stop offset="0" stop-color="#f2a9bf"/><stop offset=".55" stop-color="#fbd9e2"/><stop offset="1" stop-color="#fff7f8"/></linearGradient>
+    <linearGradient id="goldg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4d77f"/><stop offset=".5" stop-color="#cf9a2e"/><stop offset="1" stop-color="#9c6b16"/></linearGradient>
+    <linearGradient id="wineg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a62a4d"/><stop offset="1" stop-color="#7d1535"/></linearGradient>
+    <path id="pt" d="M0 0C-11 -12 -10 -36 0 -48C10 -36 11 -12 0 0Z"/>
+    <g id="lily">
+      <g fill="url(#petal)" stroke="#e3a9ba" stroke-width=".7">
+        <use href="#pt"/>
+        <use href="#pt" transform="rotate(60)"/>
+        <use href="#pt" transform="rotate(120)"/>
+        <use href="#pt" transform="rotate(180)"/>
+        <use href="#pt" transform="rotate(240)"/>
+        <use href="#pt" transform="rotate(300)"/>
+      </g>
+      <g stroke="#c0587a" stroke-width=".8" opacity=".5" fill="none" stroke-linecap="round">
+        <path d="M0 -6V-32"/><path d="M0 -6V-32" transform="rotate(60)"/><path d="M0 -6V-32" transform="rotate(120)"/>
+        <path d="M0 -6V-32" transform="rotate(180)"/><path d="M0 -6V-32" transform="rotate(240)"/><path d="M0 -6V-32" transform="rotate(300)"/>
+      </g>
+      <g stroke="#9b3a55" stroke-width=".9" stroke-linecap="round">
+        <path d="M0 0L4 -22"/><path d="M0 0L-6 -20"/><path d="M0 0L10 -16"/><path d="M0 0L-12 -14"/><path d="M0 0L2 -26"/><path d="M0 0L-2 -24"/>
+      </g>
+      <g fill="#c9731c"><circle cx="4" cy="-22" r="2.2"/><circle cx="-6" cy="-20" r="2.2"/><circle cx="10" cy="-16" r="2.2"/><circle cx="-12" cy="-14" r="2.2"/><circle cx="2" cy="-26" r="2.2"/><circle cx="-2" cy="-24" r="2.2"/></g>
+    </g>
+    <g id="leaf"><path d="M0 0C14 -30 12 -62 0 -92C-12 -62 -14 -30 0 0Z" fill="#7fa793" opacity=".6"/><path d="M0 -4V-84" stroke="#fff" stroke-opacity=".55" stroke-width="1"/></g>
+    <g id="feather">
+      <path d="M30 170C28 132 32 102 30 62" fill="none" stroke="#4d7a58" stroke-width="1.8" stroke-linecap="round"/>
+      <ellipse cx="30" cy="52" rx="26" ry="46" fill="#1f7f78" opacity=".92"/>
+      <ellipse cx="30" cy="52" rx="19" ry="34" fill="#d7b25a"/>
+      <ellipse cx="30" cy="52" rx="13" ry="24" fill="#1a4f94"/>
+      <ellipse cx="30" cy="52" rx="6.5" ry="12" fill="#0b3a52"/>
+      <circle cx="30" cy="52" r="3" fill="#d7b25a"/>
+    </g>
+    <g id="kalash">
+      <path d="M40 31C26 23 16 13 8 15C14 27 28 35 40 33Z" fill="#5f9a6e"/>
+      <path d="M40 31C54 23 64 13 72 15C66 27 52 35 40 33Z" fill="#5f9a6e"/>
+      <path d="M40 31C33 19 35 9 40 2C45 9 47 19 40 31Z" fill="#78b085"/>
+      <ellipse cx="40" cy="33" rx="11" ry="13" fill="#b9772a"/>
+      <path d="M33 26C36 34 36 40 34 44M47 26C44 34 44 40 46 44" stroke="#8a5218" stroke-width="1" fill="none"/>
+      <rect x="22" y="44" width="36" height="7" rx="3.5" fill="url(#goldg)"/>
+      <path d="M24 51H56C62 63 64 75 56 85C50 92 30 92 24 85C16 75 18 63 24 51Z" fill="url(#goldg)"/>
+      <path d="M19.5 66H60.5" stroke="#7d1535" stroke-width="4"/>
+      <g fill="#fff3c4"><circle cx="30" cy="66" r="1.4"/><circle cx="40" cy="66" r="1.4"/><circle cx="50" cy="66" r="1.4"/></g>
+    </g>
+    <g id="heart"><path d="M12 21C5 15 1 11 1 7A5.5 5.5 0 0 1 12 5A5.5 5.5 0 0 1 23 7C23 11 19 15 12 21Z"/></g>
+    <g id="rings" fill="none" stroke-width="3">
+      <circle cx="26" cy="20" r="14" stroke="url(#goldg)"/>
+      <circle cx="42" cy="20" r="14" stroke="url(#wineg)"/>
+      <path d="M26 6A14 14 0 0 1 34 8.5" stroke="url(#goldg)"/>
+    </g>
+    <path id="cap-outer" d="M0.25 42C0.25 29 11 24.5 23 18.5C36 12 45 9 50 0.8C55 9 64 12 77 18.5C89 24.5 99.75 29 99.75 42"/>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true"></div>
+<div class="progress" id="bar" aria-hidden="true"></div>
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<main lang="gu">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="deco" aria-hidden="true">
+    <svg class="px lily d-a" data-speed=".10" style="--rot:-14deg" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px lily d-b" data-speed=".06" style="--rot:20deg" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px lily d-c" data-speed="-.07" style="--rot:10deg" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px lily d-d" data-speed="-.11" style="--rot:-24deg" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px d-e" data-speed=".16" style="--rot:-28deg" viewBox="-30 -100 60 100"><use href="#leaf"/></svg>
+    <svg class="px d-f" data-speed="-.14" style="--rot:32deg" viewBox="-30 -100 60 100"><use href="#leaf"/></svg>
+  </div>
+  <div class="wrap">
+    <div class="brand rv" style="--d:.1s"><span>મારકણા</span><span>પરિવાર</span></div>
+    <div class="arch a-hero">
+      <div class="arch-main">
+        <svg class="emblem rv rv-z" style="--d:.9s" viewBox="0 0 80 96" aria-hidden="true"><use href="#kalash"/></svg>
+        <p class="shri rv" style="--d:1.0s">॥ શ્રી ગણેશાય નમઃ ॥</p>
+        <h1 class="title rv rv-z" style="--d:1.2s">શુભ વિવાહ</h1>
+        <div class="pair">
+          <p class="nm l rv rv-l" style="--d:1.5s">ચિ. યશ</p>
+          <p class="mid rv" style="--d:1.7s"><svg viewBox="0 0 60 170" aria-hidden="true" style="transform:rotate(-30deg)"><use href="#feather"/></svg><span>ના શુભ લગ્ન</span><svg viewBox="0 0 60 170" aria-hidden="true" style="transform:rotate(30deg)"><use href="#feather"/></svg></p>
+          <p class="nm r rv rv-r" style="--d:1.9s">ચિ. ભાવિકા</p>
+        </div>
+        <p class="latin rv" style="--d:2.1s">Yash &amp; Bhavika</p>
+        <p class="date rv" style="--d:2.3s">તા. ૧૩/૧૨/૨૦૨૬ રવિવાર</p>
+        <p class="date-sub rv" style="--d:2.4s">માગશર સુદ ૪ · સંવત ૨૦૮૩</p>
+        <button class="cue rv" style="--d:2.6s" type="button" data-go="letter">
+          <span>આમંત્રણ વાંચો</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LETTER -->
+<section class="letter" id="letter">
+  <div class="deco" aria-hidden="true">
+    <svg class="px lily" style="right:-90px;top:60px;width:240px;--rot:16deg" data-speed=".08" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px lily" style="left:-100px;bottom:120px;width:250px;--rot:-12deg" data-speed="-.09" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+  </div>
+  <div class="wrap">
+    <div class="arch a-letter">
+      <div class="arch-main">
+        <p class="sri rv">॥ શ્રીનાથજી બાવા સહાય છે ॥</p>
+        <div class="sides rv" style="--d:.1s"><span>॥ શ્રી યમુનાજી ॥</span><span>॥ શ્રી મહાપ્રભુજી ॥</span></div>
+
+        <div class="guest rv" style="--d:.15s">
+          <label for="guest">સુજ્ઞ મહાશય શ્રી,</label>
+          <input id="guest" type="text" maxlength="40" placeholder="અહીં આપનું નામ લખો" autocomplete="name">
+        </div>
+
+        <p class="lt rv">સહર્ષ ખુશાલી સાથ જણાવવાનું કે શ્રીનાથજી બાવા તથા કુળદેવી શ્રી બહુચરા માતાજી તથા શ્રી ખોડીયાર માતાજીની અસીમ કૃપાથી અમારા મારકણા પરિવારના આંગણે શુભ અવસર આવ્યો છે…</p>
+        <p class="lt rv">અ.સૌ. ગીતાબેન તથા શ્રી પ્રવિણભાઈ ખીમાભાઈ મારકણાના સુપુત્ર</p>
+
+        <div class="couple">
+          <div class="person a rv rv-l">
+            <span class="chip">ચિ. યશ
+              <svg class="heart" style="left:-14px;top:-12px;fill:#f08bb0" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+              <svg class="heart" style="left:-24px;top:14px;width:20px;fill:#b7e36a" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+            </span>
+            <span class="edu">(B.Tech Computer)</span>
+          </div>
+          <div class="union rv rv-z" style="--d:.15s">
+            <svg viewBox="0 0 68 40" aria-hidden="true"><use href="#rings"/></svg>
+            <span>ના શુભ લગ્ન</span>
+          </div>
+          <div class="person b rv rv-r">
+            <span class="chip">ચિ. ભાવિકા
+              <svg class="heart" style="right:-14px;top:-12px;fill:#f08bb0" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+              <svg class="heart" style="right:-24px;bottom:-4px;width:20px;fill:#a58be0" viewBox="0 0 24 24" aria-hidden="true"><use href="#heart"/></svg>
+            </span>
+            <span class="edu">(B.E.IT)</span>
+          </div>
+        </div>
+
+        <p class="lt rv">મંડોરણા(ગીર) નિવાસી અ.સૌ. અંજુબેન તથા શ્રી પ્રફુલભાઈ ચકુભાઈ બાલધાની ભણેજ સુપુત્રી અને શેરગઢ નિવાસી અ.સૌ. પુષ્પાબેન તથા શ્રી મહેન્દ્રભાઈ વજુલાલ ડોબરીયાની સુપુત્રી</p>
+        <p class="lt rv">સાથે સંવત ૨૦૮૩ ના માગશર સુદ ૪ ને રવિવાર તા. ૧૩/૧૨/૨૦૨૬ ના શુભ દિને નિર્ધારેલ છે તો આ શુભ પ્રસંગે પ્રભુતામાં પગલા પાડતા નવદંપતિને આપના અમૃતતુલ્ય આશીર્વાદ આપવા આપને સપરિવારને પધારવા અમારું અંતઃકરણ પૂર્વક આમંત્રણ છે.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="count" id="count" aria-label="શુભ ઘડી સુધી">
+  <div class="wrap">
+    <p class="eyebrow rv">॥ હસ્ત મેળાપ ॥</p>
+    <h2 class="rv" style="--d:.1s">શુભ ઘડી સુધી</h2>
+    <div class="units rv rv-z" style="--d:.2s" role="timer" aria-live="off">
+      <div class="unit"><span class="n" id="u-d">૦</span><span class="t">દિવસ</span></div>
+      <div class="unit"><span class="n" id="u-h">૦</span><span class="t">કલાક</span></div>
+      <div class="unit"><span class="n" id="u-m">૦</span><span class="t">મિનિટ</span></div>
+      <div class="unit"><span class="n" id="u-s">૦</span><span class="t">સેકન્ડ</span></div>
+    </div>
+    <p class="note rv" style="--d:.3s" id="count-note">રવિવાર, તા. ૧૩/૧૨/૨૦૨૬ · બપોરે ૧૧.૦૦ કલાકે</p>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="deco" aria-hidden="true">
+    <svg class="px f-l" data-speed="-.05" style="--rot:-8deg" viewBox="0 0 60 170"><g class="sway"><use href="#feather"/></g></svg>
+    <svg class="px f-r" data-speed=".05" style="--rot:8deg" viewBox="0 0 60 170"><g class="sway"><use href="#feather"/></g></svg>
+    <svg class="px lily" style="right:-100px;top:140px;width:230px;--rot:14deg" data-speed=".07" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+    <svg class="px lily" style="left:-110px;bottom:200px;width:230px;--rot:-18deg" data-speed="-.08" viewBox="-50 -50 100 100"><g class="sway"><use href="#lily"/></g></svg>
+  </div>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow rv">॥ માગશર સુદ ૨ થી ૪ ॥</p>
+      <h2 class="h2 rv" style="--d:.1s">આનંદના અનેરા અવસરો</h2>
+    </div>
+    <ol class="tl" id="tl">
+      <span class="tl-fill" id="tl-fill" aria-hidden="true"></span>
+
+      <li class="day rv rv-z"><span class="pill">શુક્રવાર · ૧૧/૧૨/૨૦૨૬</span></li>
+      <li class="ev l rv rv-l"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>સાંજીના ગીત</h3><p class="tith">માગશર સુદ ૨ ને શુક્રવાર</p><p class="time">સાંજે ૮.૦૦ કલાકે</p></div></li>
+
+      <li class="day rv rv-z"><span class="pill">શનિવાર · ૧૨/૧૨/૨૦૨૬</span></li>
+      <li class="ev r rv rv-r"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>મંડપ રોપણ</h3><p class="tith">માગશર સુદ ૩ ને શનિવાર</p><p class="time">સવારે ૭.૩૦ કલાકે</p><p class="where">(મનિષભાઈ વેકરીયાના નિવાસ સ્થાને)</p></div></li>
+      <li class="ev l rv rv-l"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>સ્વરુચિ ભોજન</h3><p class="tith">માગશર સુદ ૩ ને શનિવાર</p><p class="time">બપોરે ૧૧.૩૦ કલાકે</p><p class="where">(મનિષભાઈ વેકરીયાના નિવાસ સ્થાને - સુરવા (ગીર))</p></div></li>
+      <li class="ev r rv rv-r"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>રાસની રમઝટ</h3><p class="tith">માગશર સુદ ૩ ને શનિવાર</p><p class="time">રાત્રે ૮.૦૦ કલાકે</p></div></li>
+
+      <li class="day rv rv-z"><span class="pill">રવિવાર · ૧૩/૧૨/૨૦૨૬</span></li>
+      <li class="ev l rv rv-l"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>જાનપ્રયાણ</h3><p class="tith">માગશર સુદ ૪ ને રવિવાર</p><p class="time">વહેલી સવારે</p></div></li>
+      <li class="ev r key rv rv-r"><span class="dot"></span>
+        <div class="card"><div class="orn"></div><h3>હસ્ત મેળાપ</h3><p class="tith">માગશર સુદ ૪ ને રવિવાર</p><p class="time">બપોરે ૧૧.૦૦ કલાકે</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section class="venue" id="venue">
+  <div class="wrap">
+    <div class="venues">
+      <div class="vcard rv rv-l">
+        <span class="ribbon">• પરિણય વાટીકા •</span>
+        <address>શ્રી લેઉવા પટેલ સમાજ- મંડોરણા(ગીર)<br>શ્રી પ્રફુલભાઈ ચકુભાઈ બાલધા<br>તા. તાલાલા(ગીર), જી. ગીર-સોમનાથ</address>
+        <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/7q8yWGb6eQaWq1qj9">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          નકશામાં જુઓ</a>
+      </div>
+      <div class="vcard rv rv-r">
+        <span class="ribbon o">• અવસરનું આંગણું •</span>
+        <address>શ્રી ખીમાભાઈ કરશનભાઈ મારકણા<br>શ્રી કેશવભાઈ ખીમાભાઈ મારકણા<br>શ્રી પ્રવિણભાઈ ખીમાભાઈ મારકણા<br>મુ. સુરવા (ગીર), તા. તાલાલા(ગીર),<br>જી. ગીર-સોમનાથ.</address>
+        <a class="btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/w9k7hxRcveWAn5DDA">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          નકશામાં જુઓ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp" id="rsvp">
+  <div class="wrap">
+    <div class="rsvp-card rv">
+      <h2>આપની હાજરી જણાવો</h2>
+      <p class="sub">આપનું નામ અને સાથે આવનાર સભ્યોની સંખ્યા લખો. બટન દબાવતાં WhatsApp ખુલશે, સંદેશ ત્યાંથી મોકલવાનો રહેશે.</p>
+      <div class="field">
+        <label for="guest2">આપનું નામ</label>
+        <input id="guest2" type="text" maxlength="40" placeholder="દા.ત. રમેશભાઈ પટેલ" autocomplete="name">
+      </div>
+      <div class="field">
+        <span class="lab" id="cnt-lab">કુલ સભ્યો</span>
+        <div class="stepper" role="group" aria-labelledby="cnt-lab">
+          <button class="step" id="minus" type="button" aria-label="એક ઓછા">−</button>
+          <output id="cnt" aria-live="polite">૨</output>
+          <button class="step" id="plus" type="button" aria-label="એક વધારે">+</button>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn" id="wa" target="_blank" rel="noopener" href="https://wa.me/919712711706">WhatsApp પર જણાવો</a>
+        <a class="btn ghost" id="cal" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render">કૅલેન્ડરમાં ઉમેરો</a>
+      </div>
+      <p class="fine">કૅલેન્ડરમાં હસ્ત મેળાપનો સમય (૧૩/૧૨/૨૦૨૬, સવારે ૧૧.૦૦) ઉમેરાશે.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="foot" lang="gu">
+  <div class="wrap">
+    <span class="ribbon rv">• નિમંત્રક •</span>
+    <h2 class="rv" style="--d:.05s">લી. સ્નેહાધીન</h2>
+    <p class="hosts rv" style="--d:.1s">શ્રી ખીમાભાઈ કરશનભાઈ મારકણા<br>શ્રી કેશવભાઈ ખીમાભાઈ મારકણા<br>શ્રી પ્રવિણભાઈ ખીમાભાઈ મારકણા</p>
+    <address class="rv" style="--d:.15s">મુ. સુરવા (ગીર), તા. તાલાલા(ગીર), જી. ગીર-સોમનાથ.</address>
+    <p class="tel rv" style="--d:.2s">મો. <a href="tel:+919712711706">૯૭૧૨૭ ૧૧૭૦૬</a> · <a href="tel:+919978203195">૯૯૭૮૨ ૦૩૧૯૫</a></p>
+    <p class="sig rv" style="--d:.25s">મારકણા પરિવાર<small>Yash &amp; Bhavika · 13 . 12 . 2026</small></p>
+    <p class="rv" style="--d:.3s;margin-top:26px"><button class="btn ghost" id="copy" type="button">આમંત્રણની લિંક કૉપી કરો</button></p>
+    <input id="linkbox" type="text" readonly hidden aria-label="આમંત્રણની લિંક">
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var gu=function(n){return String(n).replace(/\d/g,function(d){return '૦૧૨૩૪૫૬૭૮૯'.charAt(d)})};
+
+  /* arch caps + ornaments */
+  $$('.arch').forEach(function(a){
+    a.insertAdjacentHTML('afterbegin',
+      '<svg class="cap" viewBox="0 0 100 42" aria-hidden="true">'+
+      '<path class="fill" d="M0.25 42C0.25 29 11 24.5 23 18.5C36 12 45 9 50 0.8C55 9 64 12 77 18.5C89 24.5 99.75 29 99.75 42Z"/>'+
+      '<path class="l l1" pathLength="1" d="M0.25 42C0.25 29 11 24.5 23 18.5C36 12 45 9 50 0.8C55 9 64 12 77 18.5C89 24.5 99.75 29 99.75 42"/>'+
+      '<path class="l l2" pathLength="1" transform="translate(2.4 1.9) scale(.952)" d="M0.25 42C0.25 29 11 24.5 23 18.5C36 12 45 9 50 0.8C55 9 64 12 77 18.5C89 24.5 99.75 29 99.75 42"/>'+
+      '</svg>');
+  });
+  $$('.orn').forEach(function(o){o.innerHTML='<i></i><b></b><b class="r"></b><b></b><i></i>'});
+
+  /* reveal on scroll */
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    $$('.rv,.arch').forEach(function(el){io.observe(el)});
+  }catch(err){$$('.rv,.arch').forEach(function(el){el.classList.add('in')})}
+
+  /* scroll: progress, parallax, timeline */
+  var bar=$('#bar'),par=$$('.px[data-speed]'),tl=$('#tl'),fill=$('#tl-fill'),dots=$$('.dot'),ticking=false;
+  function update(){
+    var y=window.scrollY||window.pageYOffset,h=document.documentElement.scrollHeight-innerHeight;
+    bar.style.transform='scaleX('+(h>0?Math.min(1,Math.max(0,y/h)):0)+')';
+    if(!reduce){
+      par.forEach(function(el){
+        var r=el.parentNode.getBoundingClientRect();
+        if(r.bottom<-200||r.top>innerHeight+200)return;
+        var off=r.top+r.height/2-innerHeight/2;
+        el.style.setProperty('--py',(-off*parseFloat(el.getAttribute('data-speed'))).toFixed(1)+'px');
+      });
+    }
+    var tr=tl.getBoundingClientRect(),mark=innerHeight*.62;
+    fill.style.transform='scaleY('+Math.max(0,Math.min(1,(mark-tr.top)/tr.height))+')';
+    dots.forEach(function(d){d.classList.toggle('on',d.getBoundingClientRect().top<mark)});
+    ticking=false;
+  }
+  function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll);
+  update();
+
+  $$('[data-go]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=document.getElementById(b.getAttribute('data-go'));
+      if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    });
+  });
+
+  /* countdown to hast melap, 13 Dec 2026, 11:00 IST */
+  var target=new Date('2026-12-13T11:00:00+05:30').getTime();
+  var cu={d:$('#u-d'),h:$('#u-h'),m:$('#u-m'),s:$('#u-s')},last={};
+  function setU(k,v){
+    var t=gu(v);
+    if(last[k]===t)return;
+    last[k]=t;cu[k].textContent=t;
+    if(!reduce&&cu[k].animate)cu[k].animate([{transform:'translateY(-35%)',opacity:0},{transform:'none',opacity:1}],{duration:320,easing:'ease-out'});
+  }
+  function tick(){
+    var diff=target-Date.now();
+    if(diff<=0){
+      $('.units').hidden=true;
+      $('#count-note').textContent='શુભ દિવસ આવી ગયો છે. આપના આશીર્વાદની પ્રતીક્ષા છે.';
+      return clearInterval(timer);
+    }
+    var s=Math.floor(diff/1000);
+    setU('d',Math.floor(s/86400));setU('h',Math.floor(s%86400/3600));setU('m',Math.floor(s%3600/60));setU('s',s%60);
+  }
+  var timer=setInterval(tick,1000);tick();
+
+  /* guest name, rsvp, calendar */
+  var g1=$('#guest'),g2=$('#guest2'),wa=$('#wa'),cal=$('#cal'),count=2;
+  function waUpdate(){
+    var n=(g1.value||g2.value).trim()||'મહેમાન';
+    var t='નમસ્તે, હું '+n+'. ચિ. યશ અને ચિ. ભાવિકાના શુભ લગ્ન પ્રસંગે કુલ '+gu(count)+' સભ્યો સાથે હાજર રહીશ.';
+    wa.href='https://wa.me/919712711706?text='+encodeURIComponent(t);
+  }
+  g1.addEventListener('input',function(){g2.value=g1.value;waUpdate()});
+  g2.addEventListener('input',function(){g1.value=g2.value;waUpdate()});
+  try{
+    var h=decodeURIComponent(location.hash.slice(1)).replace(/[-_]+/g,' ').trim();
+    if(h&&h.length<=40){g1.value=h;g2.value=h}
+  }catch(e){}
+  function setCount(n){count=Math.max(1,Math.min(20,n));$('#cnt').textContent=gu(count);waUpdate()}
+  $('#minus').addEventListener('click',function(){setCount(count-1)});
+  $('#plus').addEventListener('click',function(){setCount(count+1)});
+  setCount(2);
+  cal.href='https://calendar.google.com/calendar/render?action=TEMPLATE'
+    +'&text='+encodeURIComponent('Yash weds Bhavika – Hast Melap')
+    +'&dates=20261213T053000Z/20261213T093000Z'
+    +'&details='+encodeURIComponent('શુભ વિવાહ · ચિ. યશ અને ચિ. ભાવિકા · મારકણા પરિવાર, સુરવા (ગીર)');
+
+  /* copy link */
+  var cb=$('#copy'),lb=$('#linkbox');
+  cb.addEventListener('click',function(){
+    var url=location.href;
+    function fallback(){lb.value=url;lb.hidden=false;lb.focus();lb.select()}
+    try{
+      navigator.clipboard.writeText(url).then(function(){
+        cb.textContent='લિંક કૉપી થઈ ગઈ';
+        setTimeout(function(){cb.textContent='આમંત્રણની લિંક કૉપી કરો'},2200);
+      },fallback);
+    }catch(e){fallback()}
+  });
+
+  /* falling petals */
+  if(reduce)return;
+  var cv=$('#petals'),cx=cv.getContext('2d'),W=0,H=0,petals=[];
+  var cols=['#f4b6c8','#f9d3dc','#fbe6ea','#f0c67a'];
+  function size(){
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function mk(init){
+    return {x:Math.random()*W,y:init?Math.random()*H:-24,s:5+Math.random()*8,vy:.35+Math.random()*.65,
+      drift:(Math.random()-.5)*.5,ph:Math.random()*6.28,sp:.01+Math.random()*.02,rot:Math.random()*6.28,
+      vr:(Math.random()-.5)*.03,c:cols[Math.floor(Math.random()*cols.length)],a:.45+Math.random()*.35};
+  }
+  size();
+  var N=innerWidth<600?14:26;
+  for(var i=0;i<N;i++)petals.push(mk(true));
+  addEventListener('resize',size);
+  function frame(){
+    if(!document.hidden){
+      cx.clearRect(0,0,W,H);
+      petals.forEach(function(p,i){
+        p.ph+=p.sp;p.y+=p.vy;p.x+=p.drift+Math.sin(p.ph)*.6;p.rot+=p.vr;
+        if(p.y>H+24||p.x<-40||p.x>W+40){petals[i]=mk(false);return}
+        cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.scale(1,.55+.45*Math.abs(Math.sin(p.ph*1.3)));
+        cx.globalAlpha=p.a;cx.fillStyle=p.c;cx.beginPath();
+        cx.moveTo(0,-p.s);cx.bezierCurveTo(p.s*.9,-p.s*.4,p.s*.7,p.s*.6,0,p.s);
+        cx.bezierCurveTo(-p.s*.7,p.s*.6,-p.s*.9,-p.s*.4,0,-p.s);cx.fill();cx.restore();
+      });
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
